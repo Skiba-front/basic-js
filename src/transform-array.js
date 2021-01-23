@@ -5,6 +5,7 @@ module.exports = function transform(arr) {
 
   if(!Array.isArray(arr)) {
     throw new CustomError('Not implemented');
+    return
   }
 
   for(let i=0; i < arr.length; i++) {
