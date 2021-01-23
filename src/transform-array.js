@@ -15,21 +15,29 @@ module.exports = function transform(arr) {
       case '--discard-prev':
         if(typeof res[i-1] != "undefined") {
           res.splice(i-1, 2);         
+        } else {
+          res.splice(i, 1)
         }
       break;
       case '--discard-next':
         if(typeof res[i+1] != "undefined") {
         res.splice(i, 2);
+        }else {
+          res.splice(i, 1)
         }
       break;
       case '--double-next':
         if(typeof res[i+1] != "undefined") {
         res.splice(i, 1, res[i+1]);
+      }else {
+        res.splice(i, 1)
       }
       break;
       case '--double-prev':
         if(typeof res[i-1] != "undefined") {
         res.splice(i, 1, res[i-1]);
+        }else {
+          res.splice(i, 1)
         }
       break;
     }
