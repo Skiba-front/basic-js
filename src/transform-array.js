@@ -5,7 +5,6 @@ module.exports = function transform(arr) {
 
   if(!Array.isArray(arr)) {
     throw new CustomError('Not implemented');
-    return
   }
 
   for(let i=0; i < arr.length; i++) {
@@ -14,7 +13,7 @@ module.exports = function transform(arr) {
   for(let i=0; i < res.length; i++) {
     switch(res[i]) {
       case '--discard-prev':
-        if(typeof res[i-1] != "undefined") {
+        if(typeof res[i-1] != "undefined" && arr[i - 2] !== '--discard-next') {
           res.splice(i-1, 2);         
         } else {
           res.splice(i, 1)
@@ -35,7 +34,7 @@ module.exports = function transform(arr) {
       }
       break;
       case '--double-prev':
-        if(typeof res[i-1] != "undefined") {
+        if(typeof res[i-1] != "undefined" && arr[i - 2] !== '--discard-next') {
         res.splice(i, 1, res[i-1]);
         }else {
           res.splice(i, 1)
