@@ -9,15 +9,14 @@ const chainMaker = {
     return this.chainArr.length
   },
   addLink(value) {
-    if (!value) {
+    if (value === undefined) {
       this.chainArr.push('')
-      return this
     }
     this.chainArr.push(value)
     return this
   },
   removeLink(position) {
-    if(typeof position !== 'number' || position/1 > 0 || this.chainArr[position] === undefined) {
+    if (typeof(position) !== 'number' && (position ^ 0) !== position) {
       throw new CustomError('Not implemented')
     }
     this.chainArr.splice(position - 1, 1)
