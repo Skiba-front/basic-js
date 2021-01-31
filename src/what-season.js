@@ -4,7 +4,7 @@ module.exports = function getSeason(date) {
 
   if(isNaN(date.valueOf())) {
     return 'Unable to determine the time of year!'
-  } else if(!(date instanceof Date)) {
+  } else if(!(date instanceof Date) || typeof(+date) !== 'number') {
     throw new CustomError('Not implemented');
   }
 
