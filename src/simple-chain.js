@@ -1,43 +1,52 @@
 const CustomError = require("../extensions/custom-error");
 
 const chainMaker = {
-
   len: 0,
-  chainArr: [],
+  chain: '',
 
   getLength() {
-    return this.chainArr.length
+    return this.len;
   },
+
   addLink(value) {
+    if (this.chain) {
+      this.chain += '~~';
+    }
+
     if (value === undefined) {
-      this.chainArr.push('')
+      this.chain += `(  )`;
+    } else {
+      this.chain += `( ${value} )`;
     }
-    this.chainArr.push(value)
-    return this
+    this.len++;
+   
+    return chainMaker;
   },
+
   removeLink(position) {
-    if (typeof(position) !== 'number' && (position ^ 0) !== position) {
-      throw new CustomError('Not implemented')
-    }
-    this.chainArr.splice(position - 1, 1)
-    return this
-  },
-  reverseChain() {
-    this.chainArr.reverse()
-    return this
-  },
-  finishChain() {
-    let res = []
-    
-    for(let i = 0; i < this.chainArr.length; i++) {
-      if(i != this.chainArr.length - 1) {
-        res.push(`(${this.chainArr[i]})~~`)
-      } else {
-        res.push(`(${this.chainArr[i]})`)
+    if (typeof position === 'number' && Number.isInteger(position)) {
+      let arr = this.chain.split('~~');
+      if (arr[position]) {
+        arr.splice(position - 1, 1);
+        this.chain = arr.join('~~');
       }
-      
+      return chainMaker;
+    } else {
+      this.chain = '';
+      throw new Error('wrong position!');
     }
-    return res.join('')
+  },
+
+  reverseChain() {
+    let arr = this.chain.split('~~');
+    this.chain = arr.reverse().join('~~');
+    return chainMaker;
+  },
+
+  finishChain() {
+    let chain = this.chain;
+    this.chain = '';
+    return chain;
   }
 };
 
