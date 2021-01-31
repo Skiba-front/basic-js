@@ -6,14 +6,20 @@ const chainMaker = {
   chainArr: [],
 
   getLength() {
-    //throw new CustomError('Not implemented')
     return this.chainArr.length
   },
   addLink(value) {
+    if (!value) {
+      this.chainArr.push('')
+      return this
+    }
     this.chainArr.push(value)
     return this
   },
   removeLink(position) {
+    if(typeof position === 'number' && position/1 > 0) {
+      throw new CustomError('Not implemented')
+    }
     this.chainArr.splice(position - 1, 1)
     return this
   },
