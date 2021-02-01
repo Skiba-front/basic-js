@@ -2,10 +2,14 @@ const CustomError = require("../extensions/custom-error");
 
 module.exports = function getSeason(date) {
 
-  if(date === undefined) {
+    if (!date) {
     return 'Unable to determine the time of year!'
-  } else if(isNaN(Date.parse(date)) || typeof(+date) !== 'number') {
-    throw new CustomError('Not implemented');
+  } 
+    
+  try {
+    date.toJSON()
+  } catch (e) {
+    throw new Error(e)
   }
 
   let arrMon = ['winter', 'winter' , 'spring', 'spring', 'spring', 'summer', 'summer', 'summer', 'autumn', 'autumn', 'autumn', 'winter']
