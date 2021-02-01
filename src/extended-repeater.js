@@ -1,31 +1,45 @@
 const CustomError = require("../extensions/custom-error");
 
 module.exports = function repeater(str, options) {
-  str = String(str)
-  options.addition = String(options.addition) !== 'undefined' ? String(options.addition) : ''
-  options.separator = options.separator ? options.separator : '+'
-  options.additionSeparator = options.additionSeparator ? options.additionSeparator : '|'
-  
-  let res = ''
-  let dop = ''
-  if (options.additionRepeatTimes) {
-   for (let i = 1; i < options.additionRepeatTimes; i++) {
-    dop += options.addition + options.additionSeparator
-   } 
-  } 
-  dop += options.addition
-
-  if (options.repeatTimes) {
-    for (let i = 1; i <= options.repeatTimes; i++) {
-      res += str + dop
-      if (!(i === options.repeatTimes)) {
-        res += options.separator
-      }
-    } 
-  } else {
-    res = str + dop
-  }
-
-  return res
-}
-  
+    res = "";
+    let src_str = "";
+    if(str === null) src_str = "null";
+    else if (typeof(str) != 'string') src_str = str.toString();
+    else src_str = str;    
+    let repeatTimes = 1;
+    let separator = "+";
+    let addition = "";
+    let additionRepeatTimes = 1;
+    let additionSeparator = "|";
+    if(arguments.length > 1) {
+        if(options.hasOwnProperty('repeatTimes') == true) {
+            if(options.repeatTimes != undefined) repeatTimes = options.repeatTimes;
+        }
+        if(options.hasOwnProperty('separator') == true) separator = options.separator;
+        if(options.hasOwnProperty('additionRepeatTimes') == true) {
+            if(options.additionRepeatTimes != undefined) additionRepeatTimes = options.additionRepeatTimes;
+        }
+        if(options.hasOwnProperty('additionSeparator') == true) additionSeparator = options.additionSeparator;
+        if(options.hasOwnProperty('addition') == true) {
+            if(options.addition === null) addition = "null";
+            else if(typeof(options.addition) != 'string') addition = options.addition.toString();
+            else addition = options.addition;
+        }
+    }
+    let addition_full = "";
+    if(addition != "") {
+        for(let i = 1; i <= additionRepeatTimes; i++) {
+            if(i < additionRepeatTimes)
+                addition_full = addition_full + addition + additionSeparator;
+            else
+                addition_full = addition_full + addition;
+        }
+    }
+    for(let i = 1; i <= repeatTimes; i++) {
+        if(i < repeatTimes)
+            res = res + src_str + addition_full + separator;
+        else
+            res = res + src_str + addition_full;
+    }
+    return res;
+};
